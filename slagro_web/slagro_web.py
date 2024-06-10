@@ -1,8 +1,9 @@
-"""Welcome to Reflex! This file outlines the steps to create a basic app."""
-
 import reflex as rx
-
-from rxconfig import config
+import slagro_web.styles.styles as styles
+from slagro_web.components.header import header
+from slagro_web.components.navbar import navbar
+from slagro_web.components.footer import footer
+from slagro_web.components.content import content
 
 
 class State(rx.State):
@@ -13,27 +14,25 @@ class State(rx.State):
 
 def index() -> rx.Component:
     # Welcome Page (Index)
-    return rx.container(
-        rx.color_mode.button(position="top-right"),
-        rx.vstack(
-            rx.heading("Welcome to Reflex!", size="9"),
-            rx.text(
-                "Get started by editing ",
-                rx.code(f"{config.app_name}/{config.app_name}.py"),
-                size="5",
-            ),
-            rx.link(
-                rx.button("Check out our docs!"),
-                href="https://reflex.dev/docs/getting-started/introduction/",
-                is_external=True,
-            ),
-            spacing="5",
-            justify="center",
-            min_height="85vh",
+    return rx.box(
+        header(),
+        rx.center(
+            rx.vstack(
+                navbar(),
+                content(),
+                max_width=styles.MAX_WIDTH,
+                width="100%",
+                margin_y=styles.Size.BIG.value,
+            )
         ),
-        rx.logo(),
+        footer(),
     )
 
 
-app = rx.App()
+app = rx.App(
+    styles = styles.BASE_STYLES,
+    title = "SL Agro | Sembrar nunca fué tan eficiente",
+    description = "Cubiertas semineumáticas para cuerpos de siembra",
+    imagen = "sl_logo.png"
+    )
 app.add_page(index)
